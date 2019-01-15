@@ -2,5 +2,11 @@
 - name: install apache
   hosts: all
   become: true
+  pre_tasks:
+  - name: Update the RHUI certificate using the Microsoft-provided RPM
+    shell: |
+      curl -o azureclient.rpm https://rhui-1.microsoft.com/pulp/repos/microsoft-azure-rhel7/rhui-azure-rhel7-2.2-74.noarch.rpm
+      rpm -U azureclient.rpm
+      yum clean all
   roles:
   - apache
